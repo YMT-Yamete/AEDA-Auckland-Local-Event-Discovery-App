@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Widgets/bottom_wave.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
+import '../Widgets/logo_title.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -20,22 +21,7 @@ class RegisterPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height / 10),
-                        child: Text(
-                          "AEDA",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontFamily: 'Karla',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                    LogoTitle(),
                     const FormInput(labelText: 'Username'),
                     const FormInput(labelText: 'Email'),
                     const FormInput(
@@ -61,9 +47,11 @@ class RegisterPage extends StatelessWidget {
                         ),
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
                         },
                       ),
                     ),

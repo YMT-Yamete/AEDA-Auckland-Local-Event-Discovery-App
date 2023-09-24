@@ -1,5 +1,6 @@
 import 'package:aeda/View/my_feed.dart';
 import 'package:aeda/View/create.dart';
+import 'package:aeda/View/profle.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -21,10 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const List<Widget> _pages = <Widget>[
     MyFeed(),
     CreatePage(),
-    Icon(
-      Icons.person,
-      size: 150,
-    ),
+    ProfilePage(),
   ];
 
   @override

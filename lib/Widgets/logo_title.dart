@@ -9,7 +9,8 @@ class LogoTitle extends StatelessWidget {
     return Center(
       child: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / (paddingDivider ?? 10)),
+          top: MediaQuery.of(context).size.height / (paddingDivider ?? 10),
+        ),
         child: const Text(
           "AEDA",
           style: TextStyle(

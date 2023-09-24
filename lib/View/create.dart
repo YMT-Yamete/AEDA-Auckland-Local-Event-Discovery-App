@@ -1,12 +1,8 @@
 import 'dart:io';
-
-import 'package:aeda/View/register.dart';
-import 'package:aeda/Widgets/logo_title.dart';
 import 'package:aeda/Widgets/top_back_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Widgets/bottom_wave.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
 

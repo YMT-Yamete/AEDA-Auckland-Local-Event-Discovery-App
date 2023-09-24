@@ -1,4 +1,5 @@
 import 'package:aeda/Widgets/button.dart';
+import 'package:aeda/Widgets/top_back_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/interested_area_select_box.dart';
@@ -32,7 +33,14 @@ class _InterestedAreaPageState extends State<InterestedAreaPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const LogoTitle(),
+                  TopBackBar(),
+                  const LogoTitle(
+                    paddingDivider: 50,
+                  ),
+                  Text(
+                    'Please select your interested area.',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),

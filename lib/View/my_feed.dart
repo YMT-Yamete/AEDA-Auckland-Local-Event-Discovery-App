@@ -1,3 +1,4 @@
+import 'package:aeda/View/filter.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/event_card.dart';
 
@@ -35,7 +36,14 @@ class MyFeed extends StatelessWidget {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FilterPage(),
+                        ),
+                      );
+                    },
                     child: Icon(
                       Icons.search,
                       color: Colors.white,

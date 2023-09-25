@@ -4,12 +4,14 @@ class FormInput extends StatelessWidget {
   final String labelText;
   final double? bottomPadding;
   final bool? obsecureText;
+  final TextEditingController? textEditingController;
 
   const FormInput(
       {Key? key,
       required this.labelText,
       this.bottomPadding,
-      this.obsecureText});
+      this.obsecureText,
+      this.textEditingController});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class FormInput extends StatelessWidget {
           padding: EdgeInsets.only(bottom: bottomPadding ?? 10),
           child: SizedBox(
             child: TextField(
+              controller: textEditingController,
               obscureText: obsecureText ?? false,
               decoration: InputDecoration(
                 filled: true,

@@ -1,6 +1,8 @@
 import 'package:aeda/View/register.dart';
+import 'package:aeda/ViewModel/login_viewModel.dart';
 import 'package:aeda/Widgets/logo_title.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/bottom_wave.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
@@ -10,6 +12,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<LoginViewModel>(context);
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -21,16 +26,23 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    LogoTitle(paddingDivider: 4),
-                    const FormInput(labelText: 'Email'),
-                    const FormInput(
-                        labelText: 'Password',
-                        bottomPadding: 25,
-                        obsecureText: true),
+                    const LogoTitle(paddingDivider: 4),
+                    FormInput(
+                      labelText: 'Email',
+                      textEditingController: emailController,
+                    ),
+                    FormInput(
+                      labelText: 'Password',
+                      bottomPadding: 25,
+                      obsecureText: true,
+                      textEditingController: passwordController,
+                    ),
                     Button(
                       labelText: 'Login',
                       onPressed: () {
-                        // TODO: Login
+                        viewModel.email = emailController.text;
+                        viewModel.password = passwordController.text;
+                        viewModel.login(context);
                       },
                     ),
                     SizedBox(
@@ -43,7 +55,7 @@ class LoginPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => RegisterPage(),
+                              builder: (context) => const RegisterPage(),
                             ),
                           );
                         },

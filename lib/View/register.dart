@@ -1,5 +1,7 @@
 import 'package:aeda/View/login.dart';
+import 'package:aeda/ViewModel/register_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/bottom_wave.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
@@ -10,6 +12,12 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -21,22 +29,35 @@ class RegisterPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    LogoTitle(),
-                    const FormInput(labelText: 'Username'),
-                    const FormInput(labelText: 'Email'),
-                    const FormInput(
+                    const LogoTitle(),
+                    FormInput(
+                      labelText: 'Username',
+                      textEditingController: usernameController,
+                    ),
+                    FormInput(
+                      labelText: 'Email',
+                      textEditingController: emailController,
+                    ),
+                    FormInput(
                       labelText: 'Password',
                       obsecureText: true,
+                      textEditingController: passwordController,
                     ),
-                    const FormInput(
+                    FormInput(
                       labelText: 'Confirm Password',
                       bottomPadding: 25,
                       obsecureText: true,
+                      textEditingController: confirmPasswordController,
                     ),
                     Button(
                       labelText: 'Register',
                       onPressed: () {
-                        // TODO: Register
+                        viewModel.username = usernameController.text;
+                        viewModel.email = emailController.text;
+                        viewModel.password = passwordController.text;
+                        viewModel.confirmPassword =
+                            confirmPasswordController.text;
+                        viewModel.register(context);
                       },
                     ),
                     SizedBox(
@@ -49,7 +70,7 @@ class RegisterPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginPage(),
+                              builder: (context) => const LoginPage(),
                             ),
                           );
                         },

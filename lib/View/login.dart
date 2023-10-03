@@ -15,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool fieldsAreEmpty = false;
   @override
   void initState() {
@@ -26,8 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<LoginViewModel>(context);
     viewModel.redirectPage(context);
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [

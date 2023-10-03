@@ -1,8 +1,8 @@
-import 'dart:io';
+import 'package:aeda/Data/data.dart';
+import 'package:aeda/ViewModel/create_viewModel.dart';
 import 'package:aeda/Widgets/top_back_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
 
@@ -14,35 +14,14 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
-  String selectedLocation = ''; // Store the selected location
-  String selectedCategory = ''; // Store the selected category
-
-  List<String> locations = [
-    'Location 1',
-    'Location 2',
-    'Location 3'
-  ]; // Replace with your location options
-  List<String> categories = [
-    'Category 1',
-    'Category 2',
-    'Category 3'
-  ]; // Replace with your category options
-
-  File? image;
-  Future pickImage() async {
-    try {
-      final pickedImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (pickedImage == null) return;
-      final imageTemp = File(pickedImage.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
-  }
+  final TextEditingController eventNameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  String selectedLocation = '';
+  String selectedCategory = '';
 
   @override
   Widget build(BuildContext context) {
+    final CreateViewModel viewModel = Provider.of<CreateViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -53,27 +32,33 @@ class _CreatePageState extends State<CreatePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TopBackBar(),
-                    const FormInput(labelText: 'Event Name'),
-                    const FormInput(labelText: 'Address'),
+                    const TopBackBar(),
+                    FormInput(
+                      labelText: 'Event Name',
+                      textEditingController: eventNameController,
+                    ),
+                    FormInput(
+                      labelText: 'Address',
+                      textEditingController: addressController,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Location',
                           style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
-                              items: locations.map((location) {
+                              items: Data.locations.map((location) {
                                 return DropdownMenuItem<String>(
                                   value: location,
                                   child: Text(
                                     location,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 );
                               }).toList(),
@@ -82,7 +67,7 @@ class _CreatePageState extends State<CreatePage> {
                                   selectedLocation = newValue!;
                                 });
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 contentPadding: EdgeInsets.symmetric(
@@ -101,20 +86,21 @@ class _CreatePageState extends State<CreatePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Category',
                           style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
-                              items: categories.map((location) {
+                              items: Data.categories.map((location) {
                                 return DropdownMenuItem<String>(
                                   value: location,
                                   child: Text(location,
-                                      style: TextStyle(color: Colors.black)),
+                                      style:
+                                          const TextStyle(color: Colors.black)),
                                 );
                               }).toList(),
                               onChanged: (newValue) {
@@ -122,7 +108,7 @@ class _CreatePageState extends State<CreatePage> {
                                   selectedCategory = newValue!;
                                 });
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 contentPadding: EdgeInsets.symmetric(
@@ -137,66 +123,84 @@ class _CreatePageState extends State<CreatePage> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
+                        const Text(
                           'Photo',
                           style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(height: 8.0),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: SizedBox(
-                            height: 50,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                pickImage();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                        const SizedBox(height: 8.0),
+                        if (viewModel.image != null)
+                          Column(
+                            children: [
+                              Image.file(
+                                viewModel.image!,
+                                width: MediaQuery.of(context).size.width,
+                                height: 200,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add_circle_outline,
-                                    color: Color(0xFF333333),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Add Photo',
+                              GestureDetector(
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Remove Image",
                                     style: TextStyle(
-                                      color: Color(0xFF333333),
+                                      color: Colors.red,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Colors.red,
                                     ),
                                   ),
-                                ],
+                                ),
+                                onTap: () => viewModel.removeImage(),
+                              ),
+                              const SizedBox(height: 8.0)
+                            ],
+                          )
+                        else
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  viewModel.pickImage();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_circle_outline,
+                                      color: Color(0xFF333333),
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Add Photo',
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+                        Button(
+                          labelText: 'Create',
+                          onPressed: () {
+                            viewModel.eventName = eventNameController.text;
+                            viewModel.address = addressController.text;
+                            viewModel.location = selectedLocation;
+                            viewModel.category = selectedCategory;
+                            viewModel.create(context);
+                          },
                         ),
                       ],
                     ),
-                    Button(
-                      labelText: 'Create',
-                      onPressed: () {
-                        // TODO: Create
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    if (image != null)
-                      Image.file(
-                        image!,
-                        width: 100, // Adjust image width as needed
-                        height: 100, // Adjust image height as needed
-                      ),
                   ],
                 ),
               ),

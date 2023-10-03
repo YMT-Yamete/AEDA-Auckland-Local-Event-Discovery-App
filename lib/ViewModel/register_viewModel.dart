@@ -1,4 +1,4 @@
-import 'package:aeda/Model/user_model.dart';
+import 'package:aeda/Model/app_user_model.dart';
 import 'package:aeda/View/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +14,6 @@ class RegisterViewModel extends ChangeNotifier {
   late String confirmPassword;
   Future<void> register(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // TODO: Store username in firestore database
     if (password == confirmPassword) {
       try {
         final credential =

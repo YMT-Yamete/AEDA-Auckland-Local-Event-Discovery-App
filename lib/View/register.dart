@@ -15,6 +15,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   bool fieldsAreEmpty = false;
   @override
   void initState() {
@@ -25,12 +30,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
-    final TextEditingController usernameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
-
     return Scaffold(
       body: Stack(
         children: [

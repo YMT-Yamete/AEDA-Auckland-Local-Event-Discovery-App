@@ -1,7 +1,9 @@
 import 'package:aeda/View/edit_profile.dart';
 import 'package:aeda/View/interested_area.dart';
+import 'package:aeda/ViewModel/profile_viewModel.dart';
 import 'package:aeda/Widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/event_card.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -9,6 +11,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileViewModel viewModel = Provider.of<ProfileViewModel>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -33,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Username',
+                        viewModel.username,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

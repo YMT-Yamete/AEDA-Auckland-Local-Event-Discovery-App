@@ -7,12 +7,25 @@ import '../Widgets/bottom_wave.dart';
 import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool fieldsAreEmpty = false;
+  @override
+  void initState() {
+    super.initState();
+    fieldsAreEmpty = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<LoginViewModel>(context);
+    viewModel.redirectPage(context);
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     return Scaffold(
@@ -37,12 +50,30 @@ class LoginPage extends StatelessWidget {
                       obsecureText: true,
                       textEditingController: passwordController,
                     ),
+                    if (fieldsAreEmpty)
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          'Please fill in all fields',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
                     Button(
                       labelText: 'Login',
                       onPressed: () {
-                        viewModel.email = emailController.text;
-                        viewModel.password = passwordController.text;
-                        viewModel.login(context);
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty) {
+                          setState(() {
+                            fieldsAreEmpty = true;
+                          });
+                        } else {
+                          viewModel.email = emailController.text;
+                          viewModel.password = passwordController.text;
+                          viewModel.login(context);
+                        }
                       },
                     ),
                     SizedBox(

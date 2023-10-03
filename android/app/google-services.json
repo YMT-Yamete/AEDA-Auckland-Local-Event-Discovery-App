@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "934127375636",
+    "project_id": "aeda-32a41",
+    "storage_bucket": "aeda-32a41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934127375636:android:97aba4802c7a3468ff1e01",
+        "android_client_info": {
+          "package_name": "com.example.aeda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZjgRf1h3DZK5rrQihioVhLpStVD9c2QM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,8 +7,20 @@ import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
 import '../Widgets/logo_title.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  bool fieldsAreEmpty = false;
+  @override
+  void initState() {
+    super.initState();
+    fieldsAreEmpty = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +30,7 @@ class RegisterPage extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController confirmPasswordController =
         TextEditingController();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -49,15 +62,35 @@ class RegisterPage extends StatelessWidget {
                       obsecureText: true,
                       textEditingController: confirmPasswordController,
                     ),
+                    if (fieldsAreEmpty)
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          'Please fill in all fields',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
                     Button(
                       labelText: 'Register',
                       onPressed: () {
-                        viewModel.username = usernameController.text;
-                        viewModel.email = emailController.text;
-                        viewModel.password = passwordController.text;
-                        viewModel.confirmPassword =
-                            confirmPasswordController.text;
-                        viewModel.register(context);
+                        if (usernameController.text.isEmpty ||
+                            emailController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            confirmPasswordController.text.isEmpty) {
+                          setState(() {
+                            fieldsAreEmpty = true;
+                          });
+                        } else {
+                          viewModel.username = usernameController.text;
+                          viewModel.email = emailController.text;
+                          viewModel.password = passwordController.text;
+                          viewModel.confirmPassword =
+                              confirmPasswordController.text;
+                          viewModel.register(context);
+                        }
                       },
                     ),
                     SizedBox(

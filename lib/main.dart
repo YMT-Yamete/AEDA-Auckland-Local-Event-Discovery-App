@@ -1,18 +1,23 @@
 import 'package:aeda/View/bottom_nav_bar.dart';
-import 'package:aeda/View/event_details.dart';
-import 'package:aeda/View/filter.dart';
-import 'package:aeda/View/filtered_posts.dart';
-import 'package:aeda/View/interested_area.dart';
 import 'package:aeda/View/login.dart';
-import 'package:aeda/View/my_feed.dart';
-import 'package:aeda/View/register.dart';
 import 'package:aeda/ViewModel/login_viewModel.dart';
+import 'package:aeda/ViewModel/profile_viewModel.dart';
 import 'package:aeda/ViewModel/register_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
         ChangeNotifierProvider(create: (context) => RegisterViewModel()),
+        ChangeNotifierProvider(create: (context) => ProfileViewModel()),
       ],
       child: MaterialApp(
         title: 'AEDA',

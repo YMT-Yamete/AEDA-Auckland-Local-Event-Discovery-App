@@ -1,9 +1,10 @@
+import 'package:aeda/Model/local_event_model.dart';
 import 'package:aeda/View/event_details.dart';
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
-  final int index;
-  const EventCard({super.key, required this.index});
+  final LocalEvent event;
+  const EventCard({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,15 @@ class EventCard extends StatelessWidget {
         color: Color.fromARGB(255, 40, 40, 40),
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/place_holder_img.jpg',
+            Image.network(
+              event.imagePath,
               width: double.infinity,
               height: 100,
               fit: BoxFit.cover,
             ),
             ListTile(
               title: Text(
-                'Event $index',
+                event.eventName,
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -37,7 +38,7 @@ class EventCard extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                'Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem ',
+                event.description,
                 style: TextStyle(fontSize: 16, color: Colors.white),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,

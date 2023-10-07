@@ -1,3 +1,4 @@
+import 'package:aeda/Model/local_event_model.dart';
 import 'package:aeda/Widgets/top_back_bar.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/event_card.dart';
@@ -24,7 +25,18 @@ class FilteredPosts extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return EventCard(index: index);
+                  return EventCard(
+                      event: LocalEvent(
+                          eventName: '',
+                          date: '',
+                          startTime: '',
+                          endTime: '',
+                          address: '',
+                          location: '',
+                          category: '',
+                          description: '',
+                          imagePath: '',
+                          appUserEmail: ''));
                 },
               ),
             ),

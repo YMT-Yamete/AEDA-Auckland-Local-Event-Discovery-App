@@ -1,5 +1,7 @@
 import 'package:aeda/View/filter.dart';
+import 'package:aeda/ViewModel/my_feed_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/event_card.dart';
 
 class MyFeed extends StatelessWidget {
@@ -7,6 +9,7 @@ class MyFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MyFeedViewModel viewModel = Provider.of<MyFeedViewModel>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -55,9 +58,11 @@ class MyFeed extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: viewModel.itemCount,
                 itemBuilder: (context, index) {
-                  return EventCard(index: index);
+                  return EventCard(
+                    event: viewModel.localEventList[index],
+                  );
                 },
               ),
             ),

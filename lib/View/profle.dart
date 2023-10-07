@@ -1,3 +1,4 @@
+import 'package:aeda/Model/local_event_model.dart';
 import 'package:aeda/View/edit_profile.dart';
 import 'package:aeda/View/interested_area.dart';
 import 'package:aeda/ViewModel/profile_viewModel.dart';
@@ -109,9 +110,20 @@ class ProfilePage extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: 0,
                   itemBuilder: (context, index) {
-                    return EventCard(index: index);
+                    return EventCard(
+                        event: LocalEvent(
+                            eventName: '',
+                            date: '',
+                            startTime: '',
+                            endTime: '',
+                            address: '',
+                            location: '',
+                            category: '',
+                            description: '',
+                            imagePath: '',
+                            appUserEmail: ''));
                   },
                 ),
               ),

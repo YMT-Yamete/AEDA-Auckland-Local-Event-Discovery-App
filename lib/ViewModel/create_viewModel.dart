@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:aeda/Model/local_event_model.dart';
+import 'package:aeda/View/bottom_nav_bar.dart';
+import 'package:aeda/Widgets/one_button_alert_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class CreateViewModel extends ChangeNotifier {
   late String eventName;
+  late String date;
+  late String startTime;
+  late String endTime;
   late String address;
   late String location;
   late String category;
+  late String description;
   late String imagePath;
   File? image;
 
@@ -40,16 +46,28 @@ class CreateViewModel extends ChangeNotifier {
     User? currentUser = FirebaseAuth.instance.currentUser;
     LocalEvent localEvent = LocalEvent(
         eventName: eventName,
+        date: date,
+        startTime: startTime,
+        endTime: endTime,
         address: address,
         location: location,
         category: category,
+        description: description,
         imagePath: imagePath,
         appUserEmail: currentUser!.email);
     CollectionReference events =
         FirebaseFirestore.instance.collection('events');
+
     return events.add(localEvent.toMap()).then((value) {
       logger.i("Event Added");
       logger.i("Document ID: ${value.id}");
+      removeImage();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const BottomNavBar(initialIndex: 0),
+        ),
+      );
     }).catchError((error) {
       logger.e("Failed to Add Event: $error");
     });

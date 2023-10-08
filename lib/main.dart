@@ -1,4 +1,3 @@
-import 'package:aeda/View/bottom_nav_bar.dart';
 import 'package:aeda/View/login.dart';
 import 'package:aeda/ViewModel/create_viewModel.dart';
 import 'package:aeda/ViewModel/login_viewModel.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

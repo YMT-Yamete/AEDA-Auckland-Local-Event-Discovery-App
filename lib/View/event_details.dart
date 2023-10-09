@@ -1,8 +1,17 @@
+import 'package:aeda/Model/local_event_model.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/top_back_bar.dart';
+import 'package:intl/intl.dart';
 
 class EventDetails extends StatelessWidget {
-  const EventDetails({super.key});
+  final LocalEvent event;
+  const EventDetails({super.key, required this.event});
+
+  String formatDate(String originalDate) {
+    final dateTime = DateTime.parse(originalDate);
+    final formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    return formattedDate;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +30,8 @@ class EventDetails extends StatelessWidget {
                     color: Color.fromARGB(255, 40, 40, 40),
                     child: Column(
                       children: [
-                        Image.asset(
-                          'assets/images/place_holder_img.jpg',
+                        Image.network(
+                          event.imagePath,
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,
@@ -36,7 +45,7 @@ class EventDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Evant Name: Tech Job Fair",
+                          "Evant Name: ${event.eventName}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -44,7 +53,7 @@ class EventDetails extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Date: 20.20.2030",
+                          "Date: ${formatDate(event.date)}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -52,7 +61,15 @@ class EventDetails extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Location: AUT City Campus",
+                          "Location: ${event.location}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Address: ${event.address}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -61,7 +78,7 @@ class EventDetails extends StatelessWidget {
                         SizedBox(height: 10),
                         Divider(color: Colors.white),
                         Text(
-                          "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
+                          "${event.description}",
                           style: TextStyle(color: Colors.white),
                         )
                       ],

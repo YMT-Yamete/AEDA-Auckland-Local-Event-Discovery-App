@@ -1,5 +1,7 @@
+import 'package:aeda/Data/data.dart';
 import 'package:aeda/View/login.dart';
 import 'package:aeda/ViewModel/create_viewModel.dart';
+import 'package:aeda/ViewModel/interested_area_viewModel.dart';
 import 'package:aeda/ViewModel/login_viewModel.dart';
 import 'package:aeda/ViewModel/my_feed_viewModel.dart';
 import 'package:aeda/ViewModel/profile_viewModel.dart';
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProfileViewModel()),
         ChangeNotifierProvider(create: (context) => CreateViewModel()),
         ChangeNotifierProvider(create: (context) => MyFeedViewModel()),
+        ChangeNotifierProvider(create: (context) => InterestedAreaViewModel()),
       ],
       child: MaterialApp(
         title: 'AEDA',

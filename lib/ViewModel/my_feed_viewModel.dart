@@ -1,6 +1,7 @@
+import 'package:aeda/View/interested_area.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aeda/Model/local_event_model.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -45,6 +46,34 @@ class MyFeedViewModel extends ChangeNotifier {
     } catch (error) {
       final logger = Logger();
       logger.e(error);
+    }
+  }
+
+  Future<void> checkUserInterestsAndNavigate(BuildContext context) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final String? userEmail = user.email;
+      final DocumentSnapshot userInterestsSnapshot = await FirebaseFirestore
+          .instance
+          .collection('user_interests')
+          .doc(userEmail)
+          .get();
+
+      // Check if the 'interests' field is empty or null
+      final Map<String, dynamic>? userData =
+          userInterestsSnapshot.data() as Map<String, dynamic>?;
+      final List<dynamic>? userInterests =
+          userData?['interests'] as List<dynamic>?;
+
+      if (userInterests == null || userInterests.isEmpty) {
+        // User doesn't have interested areas, navigate to InterestedAreaPage
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InterestedAreaPage(),
+          ),
+        );
+      }
     }
   }
 }

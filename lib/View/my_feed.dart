@@ -10,6 +10,7 @@ class MyFeed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MyFeedViewModel viewModel = Provider.of<MyFeedViewModel>(context);
+    viewModel.checkUserInterestsAndNavigate(context);
     return Scaffold(
       body: SafeArea(
         child: Column(

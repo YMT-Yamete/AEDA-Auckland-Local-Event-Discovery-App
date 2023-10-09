@@ -1,3 +1,4 @@
+import 'package:aeda/Data/data.dart';
 import 'package:flutter/material.dart';
 
 class InterestedAreaSelectBox extends StatelessWidget {
@@ -25,7 +26,7 @@ class InterestedAreaSelectBox extends StatelessWidget {
           ),
         ),
         Text(
-          'Event Type $index',
+          Data.categories[index],
           style: const TextStyle(
             color: Colors.white,
           ),

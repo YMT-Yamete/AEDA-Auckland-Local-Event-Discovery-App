@@ -1,7 +1,9 @@
+import 'package:aeda/ViewModel/interested_area_viewModel.dart';
+import 'package:flutter/material.dart';
+import 'package:aeda/Data/data.dart';
 import 'package:aeda/Widgets/button.dart';
 import 'package:aeda/Widgets/top_back_bar.dart';
-import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../Widgets/interested_area_select_box.dart';
 import '../Widgets/logo_title.dart';
 
@@ -13,17 +15,9 @@ class InterestedAreaPage extends StatefulWidget {
 }
 
 class _InterestedAreaPageState extends State<InterestedAreaPage> {
-  List<bool> isSelected =
-      List.generate(5, (index) => false); // TODO: Change Index Size
-
-  void toggleSelection(int index) {
-    setState(() {
-      isSelected[index] = !isSelected[index];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<InterestedAreaViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -46,14 +40,14 @@ class _InterestedAreaPageState extends State<InterestedAreaPage> {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: GridView.count(
                         crossAxisCount: 2,
-                        children: List.generate(5, (index) {
-                          // TODO: Change List Size to Total Data Count
+                        children:
+                            List.generate(Data.categories.length, (index) {
                           return GestureDetector(
                             onTap: () {
-                              toggleSelection(index);
+                              viewModel.toggleSelection(index);
                             },
                             child: InterestedAreaSelectBox(
-                              isSelected: isSelected,
+                              isSelected: viewModel.isSelected,
                               index: index,
                             ),
                           );
@@ -62,10 +56,12 @@ class _InterestedAreaPageState extends State<InterestedAreaPage> {
                     ),
                   ),
                   Button(
-                      labelText: 'Submit',
-                      onPressed: () {
-                        // TODO: Save the Selected Types into Db
-                      })
+                    labelText: 'Submit',
+                    onPressed: () {
+                      viewModel.handleSubmit();
+                      Navigator.pop(context);
+                    },
+                  ),
                 ],
               ),
             ),

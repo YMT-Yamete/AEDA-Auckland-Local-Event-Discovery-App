@@ -96,37 +96,34 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 30),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            "Saved",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 0,
-                  itemBuilder: (context, index) {
-                    return EventCard(
-                        event: LocalEvent(
-                            eventName: '',
-                            date: '',
-                            startTime: '',
-                            endTime: '',
-                            address: '',
-                            location: '',
-                            category: '',
-                            description: '',
-                            imagePath: '',
-                            appUserEmail: ''));
-                  },
-                ),
-              ),
+              FutureBuilder<List<LocalEvent>>(
+                future: viewModel.fetchUserEvents(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Text('No events to display.');
+                  } else {
+                    final userEvents = snapshot.data;
+
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: userEvents!.length,
+                        itemBuilder: (context, index) {
+                          return EventCard(event: userEvents[index]);
+                        },
+                      ),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:aeda/Data/data.dart';
 import 'package:aeda/Widgets/top_back_bar.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/button.dart';
@@ -11,19 +12,8 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  String selectedLocation = ''; // Store the selected location
-  String selectedCategory = ''; // Store the selected category
-
-  List<String> locations = [
-    'Location 1',
-    'Location 2',
-    'Location 3'
-  ]; // Replace with your location options
-  List<String> categories = [
-    'Category 1',
-    'Category 2',
-    'Category 3'
-  ]; // Replace with your category options
+  String selectedLocation = '';
+  String selectedCategory = '';
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +41,7 @@ class _FilterPageState extends State<FilterPage> {
                           padding: EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
-                              items: locations.map((location) {
+                              items: Data.locations.map((location) {
                                 return DropdownMenuItem<String>(
                                   value: location,
                                   child: Text(
@@ -93,7 +83,7 @@ class _FilterPageState extends State<FilterPage> {
                           padding: EdgeInsets.only(bottom: 20),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
-                              items: categories.map((location) {
+                              items: Data.categories.map((location) {
                                 return DropdownMenuItem<String>(
                                   value: location,
                                   child: Text(location,

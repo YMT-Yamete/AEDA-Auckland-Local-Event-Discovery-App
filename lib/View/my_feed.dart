@@ -30,13 +30,6 @@ class MyFeed extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 30),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          "All Events",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
                     ],
                   ),
                   GestureDetector(
@@ -57,16 +50,35 @@ class MyFeed extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: viewModel.itemCount,
-                itemBuilder: (context, index) {
-                  return EventCard(
-                    event: viewModel.localEventList[index],
-                  );
-                },
+            if (viewModel.isLoading)
+              Expanded(
+                child: Center(
+                  child:
+                      CircularProgressIndicator(), // Show a loading indicator.
+                ),
+              )
+            else if (viewModel.itemCount == 0)
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "No events to display.",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: viewModel.itemCount,
+                  itemBuilder: (context, index) {
+                    return EventCard(
+                      event: viewModel.localEventList[index],
+                    );
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),

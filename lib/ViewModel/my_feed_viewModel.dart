@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 
 class MyFeedViewModel extends ChangeNotifier {
   late int itemCount = 0;
+  bool isLoading = true;
   List<LocalEvent> localEventList = [];
 
   MyFeedViewModel() {
@@ -15,35 +16,60 @@ class MyFeedViewModel extends ChangeNotifier {
 
   Future<void> fetchDataFromFirestore() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> eventQuery =
-          await FirebaseFirestore.instance.collection('events').get();
-
-      localEventList.clear();
-
-      await Future.forEach(eventQuery.docs, (eventDoc) async {
-        Map<String, dynamic> eventData =
-            eventDoc.data() as Map<String, dynamic>;
-
-        LocalEvent event = LocalEvent(
-          eventName: eventData['eventName'],
-          date: eventData['date'],
-          startTime: eventData['startTime'],
-          endTime: eventData['endTime'],
-          appUserEmail: eventData['appUserEmail'],
-          address: eventData['address'],
-          location: eventData['location'],
-          category: eventData['category'],
-          description: eventData['description'],
-          imagePath: eventData['imagePath'],
-        );
-
-        localEventList.add(event);
-      });
-
-      itemCount = localEventList.length;
-
+      isLoading = true;
       notifyListeners();
+
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final String? userEmail = user.email;
+
+        final DocumentSnapshot userInterestsSnapshot = await FirebaseFirestore
+            .instance
+            .collection('user_interests')
+            .doc(userEmail)
+            .get();
+
+        final Map<String, dynamic>? userData =
+            userInterestsSnapshot.data() as Map<String, dynamic>?;
+        final List<dynamic>? userInterests =
+            userData?['interests'] as List<dynamic>?;
+
+        if (userInterests != null && userInterests.isNotEmpty) {
+          QuerySnapshot<Map<String, dynamic>> eventQuery =
+              await FirebaseFirestore.instance
+                  .collection('events')
+                  .where('category', whereIn: userInterests)
+                  .get();
+
+          localEventList.clear();
+
+          eventQuery.docs.forEach((eventDoc) {
+            Map<String, dynamic> eventData =
+                eventDoc.data() as Map<String, dynamic>;
+
+            LocalEvent event = LocalEvent(
+              eventName: eventData['eventName'],
+              date: eventData['date'],
+              startTime: eventData['startTime'],
+              endTime: eventData['endTime'],
+              appUserEmail: eventData['appUserEmail'],
+              address: eventData['address'],
+              location: eventData['location'],
+              category: eventData['category'],
+              description: eventData['description'],
+              imagePath: eventData['imagePath'],
+            );
+
+            localEventList.add(event);
+          });
+
+          itemCount = localEventList.length;
+          isLoading = false;
+          notifyListeners();
+        }
+      }
     } catch (error) {
+      isLoading = false;
       final logger = Logger();
       logger.e(error);
     }

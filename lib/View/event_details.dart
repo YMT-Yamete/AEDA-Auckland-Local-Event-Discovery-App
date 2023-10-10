@@ -53,7 +53,15 @@ class EventDetails extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Date: ${formatDate(event.date)}",
+                          "Date & Time: ${formatDate(event.date)} (${event.startTime} - ${event.endTime})",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Category: ${event.category}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,

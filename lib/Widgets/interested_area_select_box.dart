@@ -15,7 +15,9 @@ class InterestedAreaSelectBox extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected[index] ? Color(0xff005EFA) : Colors.transparent,
+              color: isSelected[index]
+                  ? const Color(0xff005EFA)
+                  : Colors.transparent,
               width: 4.0,
             ),
           ),

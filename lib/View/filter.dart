@@ -27,18 +27,18 @@ class _FilterPageState extends State<FilterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TopBackBar(),
+                    const TopBackBar(),
                     const FormInput(labelText: 'Keyword'),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Location',
                           style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
                               items: Data.locations.map((location) {
@@ -46,7 +46,7 @@ class _FilterPageState extends State<FilterPage> {
                                   value: location,
                                   child: Text(
                                     location,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 );
                               }).toList(),
@@ -55,7 +55,7 @@ class _FilterPageState extends State<FilterPage> {
                                   selectedLocation = newValue!;
                                 });
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 contentPadding: EdgeInsets.symmetric(
@@ -74,20 +74,21 @@ class _FilterPageState extends State<FilterPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Category',
                           style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 20),
                           child: SizedBox(
                             child: DropdownButtonFormField<String>(
                               items: Data.categories.map((location) {
                                 return DropdownMenuItem<String>(
                                   value: location,
                                   child: Text(location,
-                                      style: TextStyle(color: Colors.black)),
+                                      style:
+                                          const TextStyle(color: Colors.black)),
                                 );
                               }).toList(),
                               onChanged: (newValue) {
@@ -95,7 +96,7 @@ class _FilterPageState extends State<FilterPage> {
                                   selectedCategory = newValue!;
                                 });
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 contentPadding: EdgeInsets.symmetric(

@@ -20,8 +20,8 @@ class EventCard extends StatelessWidget {
         );
       },
       child: Card(
-        margin: EdgeInsets.all(10.0),
-        color: Color.fromARGB(255, 40, 40, 40),
+        margin: const EdgeInsets.all(10.0),
+        color: const Color.fromARGB(255, 40, 40, 40),
         child: Column(
           children: [
             Image.network(

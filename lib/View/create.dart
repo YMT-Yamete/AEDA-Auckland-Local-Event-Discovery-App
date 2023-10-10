@@ -12,6 +12,7 @@ class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CreatePageState createState() => _CreatePageState();
 }
 
@@ -32,10 +33,11 @@ class _CreatePageState extends State<CreatePage> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (pickedDate != null && pickedDate != selectedDate)
+    if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {
         selectedDate = pickedDate;
       });
+    }
   }
 
   Future<void> _selectStartTime(BuildContext context) async {
@@ -43,10 +45,11 @@ class _CreatePageState extends State<CreatePage> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    if (pickedTime != null)
+    if (pickedTime != null) {
       setState(() {
         selectedStartTime = pickedTime;
       });
+    }
   }
 
   Future<void> _selectEndTime(BuildContext context) async {
@@ -54,10 +57,11 @@ class _CreatePageState extends State<CreatePage> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    if (pickedTime != null)
+    if (pickedTime != null) {
       setState(() {
         selectedEndTime = pickedTime;
       });
+    }
   }
 
   @override
@@ -247,7 +251,7 @@ class _CreatePageState extends State<CreatePage> {
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
@@ -256,8 +260,8 @@ class _CreatePageState extends State<CreatePage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.0),
-                          Container(
+                          const SizedBox(height: 8.0),
+                          SizedBox(
                             width: double.infinity,
                             height: 50,
                             child: ElevatedButton(
@@ -267,7 +271,7 @@ class _CreatePageState extends State<CreatePage> {
                                 ),
                               ),
                               onPressed: () => _selectDate(context),
-                              child: Text(
+                              child: const Text(
                                 'Select Event Date',
                                 style: TextStyle(
                                   color: Color(0xFF333333),
@@ -279,7 +283,8 @@ class _CreatePageState extends State<CreatePage> {
                             selectedDate != null
                                 ? "${selectedDate?.toLocal()}".split(' ')[0]
                                 : "",
-                            style: TextStyle(fontSize: 12, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white),
                           ),
                         ],
                       ),
@@ -300,7 +305,7 @@ class _CreatePageState extends State<CreatePage> {
                                     ),
                                   ),
                                   onPressed: () => _selectStartTime(context),
-                                  child: Text(
+                                  child: const Text(
                                     'Select Start Time',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
@@ -312,7 +317,7 @@ class _CreatePageState extends State<CreatePage> {
                                 selectedStartTime != null
                                     ? "${selectedStartTime?.format(context)}"
                                     : "",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12, color: Colors.white),
                               ),
                             ],
@@ -328,7 +333,7 @@ class _CreatePageState extends State<CreatePage> {
                                     ),
                                   ),
                                   onPressed: () => _selectEndTime(context),
-                                  child: Text(
+                                  child: const Text(
                                     'Select End Time',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
@@ -340,7 +345,7 @@ class _CreatePageState extends State<CreatePage> {
                                 selectedEndTime != null
                                     ? "${selectedEndTime?.format(context)}"
                                     : "",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12, color: Colors.white),
                               ),
                             ],

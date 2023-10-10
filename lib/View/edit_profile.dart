@@ -21,7 +21,7 @@ class EditProfilePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TopBackBar(),
+                    const TopBackBar(),
                     Padding(
                       padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height / 4,
@@ -48,7 +48,8 @@ class EditProfilePage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ChangePasswordPage(),
+                                    builder: (context) =>
+                                        const ChangePasswordPage(),
                                   ),
                                 );
                               },

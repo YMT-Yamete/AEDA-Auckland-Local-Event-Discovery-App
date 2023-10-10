@@ -5,12 +5,17 @@ import 'package:provider/provider.dart';
 import '../Widgets/event_card.dart';
 
 class MyFeed extends StatelessWidget {
-  const MyFeed({super.key});
+  const MyFeed({Key? key});
 
   @override
   Widget build(BuildContext context) {
     final MyFeedViewModel viewModel = Provider.of<MyFeedViewModel>(context);
     viewModel.checkUserInterestsAndNavigate(context);
+
+    Future<void> _handleRefresh() async {
+      await viewModel.refreshData();
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -24,12 +29,12 @@ class MyFeed extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {},
-                        child: Text(
+                        child: const Text(
                           "My Feed",
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 30),
                     ],
                   ),
                   GestureDetector(
@@ -37,11 +42,11 @@ class MyFeed extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FilterPage(),
+                          builder: (context) => const FilterPage(),
                         ),
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.search,
                       color: Colors.white,
                       size: 30.0,
@@ -51,14 +56,14 @@ class MyFeed extends StatelessWidget {
               ),
             ),
             if (viewModel.isLoading)
-              Expanded(
+              const Expanded(
                 child: Center(
                   child:
                       CircularProgressIndicator(), // Show a loading indicator.
                 ),
               )
             else if (viewModel.itemCount == 0)
-              Expanded(
+              const Expanded(
                 child: Center(
                   child: Text(
                     "No events to display.",
@@ -70,13 +75,16 @@ class MyFeed extends StatelessWidget {
               )
             else
               Expanded(
-                child: ListView.builder(
-                  itemCount: viewModel.itemCount,
-                  itemBuilder: (context, index) {
-                    return EventCard(
-                      event: viewModel.localEventList[index],
-                    );
-                  },
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  child: ListView.builder(
+                    itemCount: viewModel.itemCount,
+                    itemBuilder: (context, index) {
+                      return EventCard(
+                        event: viewModel.localEventList[index],
+                      );
+                    },
+                  ),
                 ),
               ),
           ],

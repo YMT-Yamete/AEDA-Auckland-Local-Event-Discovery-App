@@ -20,7 +20,7 @@ class ChangePasswordPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TopBackBar(),
+                    const TopBackBar(),
                     Padding(
                       padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height / 6,

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:aeda/Model/local_event_model.dart';
 import 'package:aeda/View/bottom_nav_bar.dart';
-import 'package:aeda/Widgets/one_button_alert_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

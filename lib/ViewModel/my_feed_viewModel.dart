@@ -43,9 +43,8 @@ class MyFeedViewModel extends ChangeNotifier {
 
           localEventList.clear();
 
-          eventQuery.docs.forEach((eventDoc) {
-            Map<String, dynamic> eventData =
-                eventDoc.data() as Map<String, dynamic>;
+          for (var eventDoc in eventQuery.docs) {
+            Map<String, dynamic> eventData = eventDoc.data();
 
             LocalEvent event = LocalEvent(
               eventName: eventData['eventName'],
@@ -61,17 +60,17 @@ class MyFeedViewModel extends ChangeNotifier {
             );
 
             localEventList.add(event);
-          });
+          }
 
           itemCount = localEventList.length;
-          isLoading = false;
-          notifyListeners();
         }
       }
     } catch (error) {
-      isLoading = false;
       final logger = Logger();
       logger.e(error);
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -93,13 +92,30 @@ class MyFeedViewModel extends ChangeNotifier {
 
       if (userInterests == null || userInterests.isEmpty) {
         // User doesn't have interested areas, navigate to InterestedAreaPage
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => InterestedAreaPage(),
+            builder: (context) => const InterestedAreaPage(),
           ),
         );
       }
+    }
+  }
+
+  Future<void> refreshData() async {
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      // Fetch the latest data here and update localEventList and itemCount
+      await fetchDataFromFirestore();
+    } catch (error) {
+      final logger = Logger();
+      logger.e(error);
+    } finally {
+      isLoading = false;
+      notifyListeners(); // Notify listeners after refreshing data
     }
   }
 }

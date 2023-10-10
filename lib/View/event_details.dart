@@ -21,13 +21,13 @@ class EventDetails extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TopBackBar(),
+            const TopBackBar(),
             SingleChildScrollView(
               child: Column(
                 children: [
                   Card(
-                    margin: EdgeInsets.all(10.0),
-                    color: Color.fromARGB(255, 40, 40, 40),
+                    margin: const EdgeInsets.all(10.0),
+                    color: const Color.fromARGB(255, 40, 40, 40),
                     child: Column(
                       children: [
                         Image.network(
@@ -46,48 +46,48 @@ class EventDetails extends StatelessWidget {
                       children: [
                         Text(
                           "Evant Name: ${event.eventName}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "Date & Time: ${formatDate(event.date)} (${event.startTime} - ${event.endTime})",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "Category: ${event.category}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "Location: ${event.location}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "Address: ${event.address}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
-                        Divider(color: Colors.white),
+                        const SizedBox(height: 10),
+                        const Divider(color: Colors.white),
                         Text(
-                          "${event.description}",
-                          style: TextStyle(color: Colors.white),
+                          event.description,
+                          style: const TextStyle(color: Colors.white),
                         )
                       ],
                     ),

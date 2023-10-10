@@ -11,6 +11,7 @@ class InterestedAreaPage extends StatefulWidget {
   const InterestedAreaPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _InterestedAreaPageState createState() => _InterestedAreaPageState();
 }
 
@@ -27,11 +28,11 @@ class _InterestedAreaPageState extends State<InterestedAreaPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TopBackBar(),
+                  const TopBackBar(),
                   const LogoTitle(
                     paddingDivider: 50,
                   ),
-                  Text(
+                  const Text(
                     'Please select your interested area.',
                     style: TextStyle(color: Colors.white),
                   ),

@@ -20,16 +20,16 @@ class FormInput extends StatelessWidget {
       children: [
         Text(
           labelText,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Padding(
           padding: EdgeInsets.only(bottom: bottomPadding ?? 10),
           child: SizedBox(
             child: TextField(
               controller: textEditingController,
               obscureText: obsecureText ?? false,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 contentPadding:

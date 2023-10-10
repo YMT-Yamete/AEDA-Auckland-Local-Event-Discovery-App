@@ -1,6 +1,7 @@
 import 'package:aeda/Model/local_event_model.dart';
 import 'package:aeda/View/edit_profile.dart';
 import 'package:aeda/View/interested_area.dart';
+import 'package:aeda/View/login.dart';
 import 'package:aeda/ViewModel/profile_viewModel.dart';
 import 'package:aeda/Widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Text(
                         viewModel.username,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                         ),
@@ -52,11 +53,11 @@ class ProfilePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfilePage(),
+                                builder: (context) => const EditProfilePage(),
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Edit Profile',
                             style: TextStyle(
                               color: Colors.white,
@@ -77,8 +78,19 @@ class ProfilePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => InterestedAreaPage(),
+                        builder: (context) => const InterestedAreaPage(),
                       ),
+                    );
+                  }),
+              Button(
+                  labelText: 'Logout',
+                  color: Colors.red,
+                  onPressed: () {
+                    viewModel.signOut();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
                     );
                   }),
               Padding(
@@ -90,12 +102,12 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {},
-                          child: Text(
+                          child: const Text(
                             "My Events",
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                       ],
                     ),
                   ],
@@ -105,11 +117,11 @@ class ProfilePage extends StatelessWidget {
                 future: viewModel.fetchUserEvents(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Text('No events to display.');
+                    return const Text('No events to display.');
                   } else {
                     final userEvents = snapshot.data;
 
@@ -117,7 +129,69 @@ class ProfilePage extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: userEvents!.length,
                         itemBuilder: (context, index) {
-                          return EventCard(event: userEvents[index]);
+                          return GestureDetector(
+                            onLongPress: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Confirm Delete'),
+                                    content: const Text(
+                                        'Do you want to delete this event?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Cancel'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text('Delete'),
+                                        onPressed: () {
+                                          // Close the confirmation dialog
+                                          Navigator.of(context).pop();
+
+                                          // Show another confirmation dialog for final delete
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    'Confirm Delete'),
+                                                content: const Text(
+                                                    'This action cannot be undone. Do you really want to delete this event?'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: const Text('Cancel'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: const Text('Delete'),
+                                                    onPressed: () async {
+                                                      await viewModel
+                                                          .deleteEvent(
+                                                              userEvents[index]
+                                                                  .imagePath);
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: EventCard(event: userEvents[index]),
+                          );
                         },
                       ),
                     );

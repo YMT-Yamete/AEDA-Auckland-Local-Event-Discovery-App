@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   String username = "Loading...";
@@ -44,8 +45,8 @@ class ProfileViewModel extends ChangeNotifier {
               .where('appUserEmail', isEqualTo: user.email)
               .get();
 
-      eventQuery.docs.forEach((eventDoc) {
-        final eventData = eventDoc.data() as Map<String, dynamic>;
+      for (var eventDoc in eventQuery.docs) {
+        final eventData = eventDoc.data();
 
         final event = LocalEvent(
           eventName: eventData['eventName'],
@@ -61,9 +62,40 @@ class ProfileViewModel extends ChangeNotifier {
         );
 
         userEvents.add(event);
-      });
+      }
     }
 
     return userEvents;
+  }
+
+  Future<void> deleteEvent(String imagePath) async {
+    try {
+      final CollectionReference events =
+          FirebaseFirestore.instance.collection('events');
+
+      final QuerySnapshot<Object?> query =
+          await events.where('imagePath', isEqualTo: imagePath).limit(1).get();
+
+      if (query.docs.isNotEmpty) {
+        final DocumentSnapshot<Map<String, dynamic>> eventDoc =
+            query.docs.first as DocumentSnapshot<Map<String, dynamic>>;
+        await eventDoc.reference.delete();
+        notifyListeners();
+      }
+    } catch (e) {
+      final logger = Logger();
+      logger.e(e);
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+    } catch (e) {
+      final logger = Logger();
+      logger.e("Error during sign out: $e");
+    }
   }
 }

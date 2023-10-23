@@ -103,6 +103,13 @@ class MyFeedViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> clearData() async {
+    localEventList.clear();
+    itemCount = 0;
+    isLoading = false;
+    notifyListeners();
+  }
+
   Future<void> refreshData() async {
     try {
       isLoading = true;

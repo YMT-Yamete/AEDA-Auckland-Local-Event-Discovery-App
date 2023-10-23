@@ -27,10 +27,9 @@ class ProfilePage extends StatelessWidget {
                     child: ClipOval(
                       child: Image.asset(
                         'assets/images/place_holder_profile.jpg',
-                        width: 100, // Adjust the width as needed
-                        height: 100, // Adjust the height as needed
-                        fit: BoxFit
-                            .cover, // You can use different BoxFit values to control how the image is scaled
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -121,7 +120,10 @@ class ProfilePage extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No events to display.');
+                    return const Text(
+                      'No events to display.',
+                      style: TextStyle(color: Colors.white),
+                    );
                   } else {
                     final userEvents = snapshot.data;
 

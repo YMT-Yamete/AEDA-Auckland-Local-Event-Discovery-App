@@ -1,5 +1,6 @@
 import 'package:aeda/View/register.dart';
 import 'package:aeda/ViewModel/login_viewModel.dart';
+import 'package:aeda/ViewModel/profile_viewModel.dart';
 import 'package:aeda/Widgets/logo_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import '../Widgets/button.dart';
 import '../Widgets/form_input.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -18,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool fieldsAreEmpty = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<LoginViewModel>(context);
-    viewModel.redirectPage(context);
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         } else {
                           viewModel.email = emailController.text;
                           viewModel.password = passwordController.text;
-                          viewModel.login(context);
+                          viewModel.login(context, profileViewModel);
                         }
                       },
                     ),

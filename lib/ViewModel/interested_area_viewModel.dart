@@ -32,6 +32,26 @@ class InterestedAreaViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> loadUserInterests(String userEmail) async {
+    try {
+      final DocumentSnapshot userInterestsDoc = await FirebaseFirestore.instance
+          .collection('user_interests')
+          .doc(userEmail)
+          .get();
+
+      if (userInterestsDoc.exists) {
+        final List<dynamic> userInterests = userInterestsDoc.get('interests');
+        for (int i = 0; i < Data.categories.length; i++) {
+          isSelected[i] = userInterests.contains(Data.categories[i]);
+        }
+        notifyListeners();
+      }
+    } catch (error) {
+      final logger = Logger();
+      logger.e('Error loading user interests: $error');
+    }
+  }
+
   void handleSubmit() {
     selectedCategories.clear();
     for (int i = 0; i < isSelected.length; i++) {

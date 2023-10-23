@@ -1,11 +1,27 @@
 import 'package:aeda/View/filter.dart';
 import 'package:aeda/ViewModel/my_feed_viewModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/event_card.dart';
 
-class MyFeed extends StatelessWidget {
+class MyFeed extends StatefulWidget {
   const MyFeed({Key? key});
+
+  @override
+  State<MyFeed> createState() => _MyFeedState();
+}
+
+class _MyFeedState extends State<MyFeed> {
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = Provider.of<MyFeedViewModel>(context, listen: false);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      viewModel.refreshData();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

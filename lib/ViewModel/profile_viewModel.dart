@@ -9,29 +9,32 @@ class ProfileViewModel extends ChangeNotifier {
   String username = "Loading...";
 
   ProfileViewModel() {
-    fetchUsername();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        fetchUsername(user);
+      } else {
+        username = "Not logged in";
+        notifyListeners();
+      }
+    });
   }
 
-  Future<void> fetchUsername() async {
+  Future<void> fetchUsername(User user) async {
     try {
-      final User? user = FirebaseAuth.instance.currentUser;
-
-      if (user != null) {
-        final QuerySnapshot<Map<String, dynamic>> userQuery =
-            await FirebaseFirestore.instance
-                .collection('users')
-                .where('email', isEqualTo: user.email)
-                .limit(1)
-                .get();
-        if (userQuery.docs.isNotEmpty) {
-          username = userQuery.docs.first.get('username');
-          notifyListeners();
-        }
+      final QuerySnapshot<Map<String, dynamic>> userQuery =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: user.email)
+              .limit(1)
+              .get();
+      if (userQuery.docs.isNotEmpty) {
+        username = userQuery.docs.first.get('username');
       }
     } catch (e) {
       final logger = Logger();
       logger.e(e);
     }
+    notifyListeners();
   }
 
   Future<List<LocalEvent>> fetchUserEvents() async {

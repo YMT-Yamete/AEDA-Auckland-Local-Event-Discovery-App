@@ -1,4 +1,5 @@
 import 'package:aeda/ViewModel/interested_area_viewModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aeda/Data/data.dart';
 import 'package:aeda/Widgets/button.dart';
@@ -16,6 +17,17 @@ class InterestedAreaPage extends StatefulWidget {
 }
 
 class _InterestedAreaPageState extends State<InterestedAreaPage> {
+  @override
+  void initState() {
+    super.initState();
+    final viewModel =
+        Provider.of<InterestedAreaViewModel>(context, listen: false);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      viewModel.loadUserInterests(user.email!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<InterestedAreaViewModel>(context);

@@ -1,39 +1,60 @@
-import 'package:flutter/material.dart';
-
 class LocalEvent {
-  String eventName;
-  String date;
-  String startTime;
-  String endTime;
-  String address;
-  String location;
-  String category;
-  String description;
-  String imagePath;
-  String? appUserEmail;
-  LocalEvent(
-      {required this.eventName,
-      required this.date,
-      required this.startTime,
-      required this.endTime,
-      required this.address,
-      required this.location,
-      required this.category,
-      required this.description,
-      required this.imagePath,
-      this.appUserEmail});
+  final String _eventName;
+  final String _date;
+  final String _startTime;
+  final String _endTime;
+  final String _address;
+  final String _location;
+  final String _category;
+  final String _description;
+  final String _imagePath;
+  final String? _appUserEmail;
+
+  LocalEvent({
+    required String eventName,
+    required String date,
+    required String startTime,
+    required String endTime,
+    required String address,
+    required String location,
+    required String category,
+    required String description,
+    required String imagePath,
+    String? appUserEmail,
+  })  : _eventName = eventName,
+        _date = date,
+        _startTime = startTime,
+        _endTime = endTime,
+        _address = address,
+        _location = location,
+        _category = category,
+        _description = description,
+        _imagePath = imagePath,
+        _appUserEmail = appUserEmail;
+
   Map<String, dynamic> toMap() {
     return {
-      'eventName': eventName,
-      'date': date,
-      'startTime': startTime,
-      'endTime': endTime,
-      'address': address,
-      'location': location,
-      'category': category,
-      'description': description,
-      'imagePath': imagePath,
-      'appUserEmail': appUserEmail,
+      'eventName': _eventName,
+      'date': _date,
+      'startTime': _startTime,
+      'endTime': _endTime,
+      'address': _address,
+      'location': _location,
+      'category': _category,
+      'description': _description,
+      'imagePath': _imagePath,
+      'appUserEmail': _appUserEmail,
     };
   }
+
+  String get eventName => _eventName;
+  String get date => _date;
+  String get startTime => _startTime;
+  String get endTime => _endTime;
+  String get address => _address;
+  String get location => _location;
+  String get category => _category;
+  String get description => _description;
+  String get imagePath => _imagePath;
+  String? get appUserEmail => _appUserEmail;
 }

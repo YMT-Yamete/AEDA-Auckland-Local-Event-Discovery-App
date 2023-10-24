@@ -40,17 +40,17 @@ Before you begin, ensure you have met the following requirements:
 
 1.  Start the development server:
    
-   ```shell
-   flutter run
-   ```
+      ```shell
+      flutter run
+      ```
 This command will launch the app on a connected device or emulator.
 
 2.  You can also build an APK or iOS app bundle for distribution:
 
-   ```shell
-  flutter build apk
-  flutter build ios
-  ```
+      ```shell
+     flutter build apk
+     flutter build ios
+     ```
 
 ## Contact
 

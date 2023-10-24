@@ -1,8 +1,6 @@
 # AEDA-Auckland-Local-Event-Discovery-App
 
-![App Logo](/assets/app_logo.png)
-
-Your App Name is a Flutter mobile application that does something awesome. This README file provides step-by-step instructions on how to install and run the app on your local development environment.
+Discover and engage with local events in Auckland with our mobile app!
 
 ## Table of Contents
 
@@ -35,7 +33,7 @@ Before you begin, ensure you have met the following requirements:
 3. Install the project dependencies:
    
   ```shell
-   flutter pub get
+  flutter pub get
   ```
 ## Usage
 

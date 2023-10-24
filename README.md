@@ -21,7 +21,7 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository to your local machine:
 
    ```shell
-   git clone https://github.com/yourusername/your-app-name.git
+   git clone https://github.com/YMT-Yamete/AEDA-Auckland-Local-Event-Discovery-App.git
    ```
 
 2. Change your current directory to the project directory:
@@ -32,9 +32,10 @@ Before you begin, ensure you have met the following requirements:
 
 3. Install the project dependencies:
    
-  ```shell
-  flutter pub get
-  ```
+     ```shell
+     flutter pub get
+     ```
+
 ## Usage
 
 1.  Start the development server:
